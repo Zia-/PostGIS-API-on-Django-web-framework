@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
+from django.db import connection
+from django.db import connections
 
 # Create your views here.
 
@@ -14,8 +16,9 @@ def alertmsg(request):
 def msg(request):
 	if request.method == 'GET':
 		return HttpResponse("get1")
-	elif request.method == 'POST':
-		return HttpResponse("post1")
+	# POST method cant be of return type	
+	#elif request.method == 'POST':
+	#	return HttpResponse("post1")
 
 def detail(request, question_id):
 	return HttpResponse("Your looking at question %s" % question_id)
@@ -30,6 +33,19 @@ def vote(request, question_id):
 def new(request, newarg1, newarg2):
 	return HttpResponse("New Args are = %s %s" % (newarg1, newarg2))
 
+def dbget1(request):
+	cursor = connection.cursor()
+	# for other Db connections : cursor = connections['db2'],cursor()
+	cursor.execute("select * from world where gid = 1")
+	row = cursor.fetchone()
+	#return row
+	return HttpResponse("New11")
+
+	#desc = cursor.description
+    	#return [
+        #dict(zip([col[0] for col in desc], row))
+        #for row in cursor.fetchall()
+    	#]
 
 
 

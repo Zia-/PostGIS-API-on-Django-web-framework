@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
     # ex: /app1/5/4/new/
     url(r'^(?P<newarg1>\d+)/(?P<newarg2>\d+)/new/$', views.new, name='new'),
+    # ex: /app1/dbget/
+    url(r'^dbget/', views.dbget1, name='dbg'),
     #
     url(r'^alert1/', views.alertmsg, name='allt'),
     url(r'^msg1/', views.msg, name='mss'),
