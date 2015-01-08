@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'test2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django3',
+        'NAME': 'djangoapi1',
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',
@@ -68,7 +68,7 @@ DATABASES = {
     },
     'usersdb1': {
 	'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django2',
+        'NAME': 'djangoapi2',
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',

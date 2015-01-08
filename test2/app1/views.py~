@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from django.db import connection
 from django.db import connections
+import json as simplejson
 
 # Create your views here.
 
@@ -36,9 +37,26 @@ def new(request, newarg1, newarg2):
 def dbget1(request):
 	cursor = connection.cursor()
 	# for other Db connections : cursor = connections['db2'],cursor()
-	cursor.execute("select * from world where gid = 1")
-	row = cursor.fetchone()
-	return row
+	cursor.execute("select * from world")
+	
+	#somedata = {'some1': 'foo',
+	#		'some2': 'bar',}
+
+	somedata = []
+	#for i in range(0,10):
+	#	d = {'x': '102'}
+	#	somedata.append(d)
+
+	for i in cursor:
+		d = {'x': i[3]}
+		somedata.append(d)
+	data = simplejson.dumps(somedata)
+	return HttpResponse(data)
+
+	#return HttpResponse(data, mimetype='application/json')
+	#for i in cursor:
+	#	return i[0]
+	#return row
 	#return HttpResponse("New11")
 
 	#desc = cursor.description
