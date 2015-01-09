@@ -17,5 +17,14 @@ urlpatterns = patterns('',
     # This is "dbconn1" Db = a particular table and all containing data
     url(r'^(?P<tbl_name>\w+)/dbconn1/$', views.dbconn1_tbl_view, name='dbconn1_tbl_name'),
     # This is "dbconn1" Db = a particular table and particular gid
+    # Regular expression for alphabets : \w+
+    # Regular expression for numbers (integers) : \d+
     url(r'^(?P<tbl_name>\w+)/(?P<gid>\d+)/dbconn1/$', views.dbconn1_tbl_gid_view, name='dbconn1_tbl_gid_name'),
+    # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
+    # Regular expression for decimal numbers : \d+\.\d*
+    # More details on Regular expressions :
+    # https://docs.python.org/2/howto/regex.html
+    # https://docs.python.org/2/library/re.html#re-syntax
+    # https://docs.python.org/2/library/re.html#re.DOTALL
+    url(r'^(?P<tbl_name>\w+)/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/pgr_aStarFromAtoB/$', views.dbconn1_tbl_pts_pgr_aStarFromAtoB_view, name='dbconn1_tbl_pts_pgr_aStarFromAtoB_name'),
 )
