@@ -34,5 +34,7 @@ urlpatterns = patterns('',
     url(r'^post/$', views.post_test, name='post_test'),
     # This is "dbconn1" Db upload file
     url(r'^upload/$', views.upload_test, name='upload_test'),
+    # This is "dbconn1" Db upload file
+    url(r'^uploadresponse/$', views.uploadresponse_test, name='uploadresponse_test'),
     
 )

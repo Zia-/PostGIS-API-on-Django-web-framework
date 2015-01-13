@@ -10,11 +10,17 @@
     <div id="content">
         fsfsdfs
     </div>
-	<form action="/postgis/uploadresponse/" enctype="multipart/form-data" method="POST">
-		{% csrf_token %}
+	<!--<form action="/postgis/uploadresponse/" enctype="multipart/form-data" method="POST">
+		
 		<label for="title">Your name: </label>
 		<input id="title" type="file" name="title" maxlength="100">
 		<input type="submit" value="Submit">
-	</form>
+	</form>-->
+	<form action="/postgis/form/" method="post">
+		{% csrf_token %}
+	    <label for="your_name">Your name: </label>
+	    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+	    <input type="submit" value="OK">
+</form>
 </body>
 </html>

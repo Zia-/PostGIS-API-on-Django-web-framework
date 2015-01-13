@@ -162,3 +162,13 @@ def uploadresponse_test(request):
         return HttpResponse('false')
     #return HttpResponse("assss")
 
+def form_test(request):
+	if request.method == 'POST':
+		form1 = UploadFileForm(request.POST)
+		if form1.is_valid():
+			return HttpResponse(form1)
+	else:
+        	form = NameForm()
+	return HttpResponse("asses")
+
+
