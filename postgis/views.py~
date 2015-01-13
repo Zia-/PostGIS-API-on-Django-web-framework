@@ -7,6 +7,16 @@ from django.db import connections
 # For simplejson output during return stage
 import json as simplejson
 import os
+# To use templates created under the postgis/templates/postgis dir
+	# we have created another postgis dir after templates coz Django
+	# will search for all the templates inside the templates dir for all the apps
+	# and then there could be soo many index.html for diff apps. 
+	# Using the above approach we are referring to the 
+	# index.html file like /postgis/index.html
+from django.template import RequestContext, loader
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from .forms import UploadFileForm
 
 # Create your views here.
 
@@ -99,21 +109,52 @@ def dbconn1_tbl_pts_pgr_aStarFromAtoB_view(request, tbl_name, long_st, lat_st, l
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 
-# View 7: Post test
-def post_test(request):
-	if request.method == 'POST':
-		#os.system("gedit")
-		return HttpResponse("post")
-	elif request.method == 'GET':
-		return HttpResponse("get")
+# View 7: template test
+def template_test(request):
+	#latest_question_list = "ZIa"
+	template = loader.get_template('postgis/index.html')
+	#context = RequestContext(request, {"latest_question_list": latest_question_list})
+	#return HttpResponse(template.render(context))
+	context = RequestContext(request)
+	return HttpResponse(template.render(context))
 	
-# View 8: Test
-def test(request):
-	latest_question_list = Question.objects.order_by('-pub_date')[:5]
-	output = ', '.join([p.question_text for p in latest_question_list])
-	return HttpResponse(output)
+# View 8: Post feed Db
+def post_test(request):
+	if request.method == "POST":
+		#form = ContactForm(request.POST)
+		return HttpResponse(request.POST.get('id'))
+
+# View 9: Post Upload file
+def upload_test(request):
+	template = loader.get_template('postgis/file_upload.html')
+	#context = RequestContext(request, {"latest_question_list": latest_question_list})
+	#return HttpResponse(template.render(context))
+	context = RequestContext(request)
+	return HttpResponse(template.render(context))
+
+def uploadresponse_test(request):
+	if request.method == "POST":
+		#form = ContactForm(request.POST)
+		osm = request.POST.get('myFile')
+		os.system("osm2pgrouting -file %s -conf /usr/share/osm2pgrouting/mapconfig.xml -host localhost -port 5432 -dbname djangoapi2 -user postgres -passwd zia123 -prefixtables kn_ -clean" % (osm))
+		return HttpResponse("uploadedddd")
 
 
 
 
+
+def handle_uploaded_file(f):
+    with open('/home/zia/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+def uploadresponse_test(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            #handle_uploaded_file(request.FILES['file'])
+            return HttpResponse('true')
+    else:
+        return HttpResponse('false')
+    #return HttpResponse("assss")
 

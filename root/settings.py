@@ -56,6 +56,11 @@ ROOT_URLCONF = 'root.urls'
 
 WSGI_APPLICATION = 'root.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSOR = (
+	# We need this to allow csrf from templates
+	'django.core.context_processors.csrf',
+)
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

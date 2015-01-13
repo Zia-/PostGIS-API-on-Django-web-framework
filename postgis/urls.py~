@@ -28,8 +28,11 @@ urlpatterns = patterns('',
     # https://docs.python.org/2/library/re.html#re.DOTALL
     url(r'^(?P<tbl_name>\w+)/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/pgr_aStarFromAtoB/$', views.dbconn1_tbl_pts_pgr_aStarFromAtoB_view, name='dbconn1_tbl_pts_pgr_aStarFromAtoB_name'),
 
-    # This is "dbconn1" Db post method
-    url(r'^post/', views.post_test, name='post_test'),
-    # This is Test
-    url(r'^test/', views.test, name='test'),
+    # This is "dbconn1" Db template
+    url(r'^template/$', views.template_test, name='template_test'),
+    # This is "dbconn1" Db post
+    url(r'^post/$', views.post_test, name='post_test'),
+    # This is "dbconn1" Db upload file
+    url(r'^upload/$', views.upload_test, name='upload_test'),
+    
 )
