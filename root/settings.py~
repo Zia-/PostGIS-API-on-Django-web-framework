@@ -56,6 +56,9 @@ ROOT_URLCONF = 'root.urls'
 
 WSGI_APPLICATION = 'root.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSOR = (
+	'django.core.context_processors.csrf',
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -64,10 +67,14 @@ WSGI_APPLICATION = 'root.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# It's the Db name
         'NAME': 'djangoapi1',
+# Db superuser
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
+# Normally HOST should be blank for localhost (like 'HOST': '') but there was some problem, so 127.0.0.1
 	'HOST': '127.0.0.1',
+# PORT should also be blank if postgresql is running on 5432 port
 	'PORT': '5432',
     },
     'dbconn1': {

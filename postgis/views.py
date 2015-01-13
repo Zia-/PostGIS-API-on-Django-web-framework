@@ -6,6 +6,7 @@ from django.db import connection
 from django.db import connections
 # For simplejson output during return stage
 import json as simplejson
+import os
 
 # Create your views here.
 
@@ -50,7 +51,7 @@ def dbconn1_view(request):
 # View 5: "dbconn1" Db = a particular table and all containing data
 # (1) Here I have converted "i[7]" to a string coz JSON notation has only a handful of native
 # datatypes (objects, arrays, strings, numbers, booleans, and null), so anything serialized in
-# JSON needs to be expressed as one of these types.
+# JSON needs to be expressed as one of these types. i[7] is a numeric.
 # (2) I can even add the "geom" column also and corresponding i[12] but it's just making
 # request slow and its info is useless
 def dbconn1_tbl_view(request, tbl_name):
@@ -98,8 +99,14 @@ def dbconn1_tbl_pts_pgr_aStarFromAtoB_view(request, tbl_name, long_st, lat_st, l
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 
-
-
+# View 7: Post test
+def post_test(request):
+	if request.method == 'POST':
+		#os.system("gedit")
+		return HttpResponse("post")
+	elif request.method == 'GET':
+		return HttpResponse("get")
+	
 
 
 
