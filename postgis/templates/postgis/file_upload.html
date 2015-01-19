@@ -8,19 +8,13 @@
 <body>
     
     <div id="content">
-        fsfsdfs
+        	
     </div>
-	<!--<form action="/postgis/uploadresponse/" enctype="multipart/form-data" method="POST">
-		
-		<label for="title">Your name: </label>
-		<input id="title" type="file" name="title" maxlength="100">
-		<input type="submit" value="Submit">
-	</form>-->
-	<form action="/postgis/form/" method="post">
+	<form action="/postgis/uploadresponse/" enctype="multipart/form-data" method="POST">
 		{% csrf_token %}
-	    <label for="your_name">Your name: </label>
-	    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-	    <input type="submit" value="OK">
-</form>
+		<label for="title">Your name: </label>
+		<input id="fileosm" type="file" name="file" maxlength="100">
+		<input type="submit" value="Submit">
+	</form>
 </body>
 </html>

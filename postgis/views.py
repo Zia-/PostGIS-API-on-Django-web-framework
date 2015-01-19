@@ -151,24 +151,13 @@ def handle_uploaded_file(f):
 def uploadresponse_test(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            #handle_uploaded_file(request.FILES['file'])
-	    f = request.FILES['file']
-	    with open('/home/zia/name.txt', 'wb+') as destination:
-            	for chunk in f.chunks():
+	#if form.is_valid():
+	f = request.FILES['fileosm']
+	with open('/home/zia/name.txt', 'wb+') as destination:
+        	for chunk in f.chunks():
             		destination.write(chunk)
-            return HttpResponse('true')
+        return HttpResponse("true1")
     else:
         return HttpResponse('false')
     #return HttpResponse("assss")
-
-def form_test(request):
-	if request.method == 'POST':
-		form1 = UploadFileForm(request.POST)
-		if form1.is_valid():
-			return HttpResponse(form1)
-	else:
-        	form = NameForm()
-	return HttpResponse("asses")
-
 
