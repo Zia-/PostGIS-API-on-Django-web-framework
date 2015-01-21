@@ -15,6 +15,12 @@ urlpatterns = patterns('',
     # https://docs.python.org/2/library/re.html#re-syntax
     # https://docs.python.org/2/library/re.html#re.DOTALL
     url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/pgr_aStarFromAtoB/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+    # This is for the search functionality. It will take the text argument, been typed by
+    # by the user plus his/her current coord and will show the nearest 3 places with that text.
+    url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/(?P<clmn_name>\w+)/(?P<search_txt>\w+)/(?P<long_current>\d+\.\d*)/(?P<lat_current>\d+\.\d*)/$', views.search_view, name='search_name'),
+    
+
+
 
 
 

@@ -24,7 +24,7 @@ from .forms import UploadFileForm
 def welcomenote_view(request):
     return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
 
-# View 7: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
+# View 2: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
 def pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_end, lat_end):
 	cursor = connections[username].cursor()
 	cursor.execute("SELECT name, cost, x1, y1, x2, y2 FROM pgr_aStarFromAtoB(%s, %s, %s, %s, %s) ORDER BY seq", [tbl_name, long_st, lat_st, long_end, lat_end])
@@ -38,9 +38,25 @@ def pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_en
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 
-
-
-
+# View 3: This is for the search functionality. It will take the text argument, been typed by by the user plus his/her current coord and will show the nearest 3 places with that text.
+def search_view(request, username, tbl_name, clmn_name, search_txt, long_current, lat_current):
+	cursor = connections[username].cursor()
+	# The following approach is the best
+	# "like" will be case sensitive, but "ilike" is not. So I am using "ilike"
+	query = "select name, x, y from " + tbl_name + " where " + clmn_name + " ilike '%" + search_txt + "%' order by the_geom <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")') LIMIT 3"
+	cursor.execute(query)
+	# The following appraoch is giving this kind of error: select name, x, y from 'ways_vertices_pgr' .... Syntex error
+	#cursor.execute("select name, x, y from %s where id = 1"+
+	#		"order by the_geom <-> ST_GeomFromText('POINT(%s %s)')"+ 		
+	#		"LIMIT 3", [tbl_name, clmn_name, long_current, lat_current])	
+	result = []
+	fields = ['name', 'x', 'y']
+	result.append(fields)
+	for i in cursor:
+		row = [i[0], i[1], i[2]]
+		result.append(row)
+	json_result = simplejson.dumps(result)
+	return HttpResponse(json_result)
 
 
 
