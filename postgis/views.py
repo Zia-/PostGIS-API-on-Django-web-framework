@@ -21,7 +21,7 @@ from .forms import UploadFileForm
 # Create your views here.
 
 # View 1: Default welcome note.
-def index_view(request):
+def welcomenote_view(request):
     return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
 
 # View 2: Default alert message.
@@ -92,8 +92,8 @@ def dbconn1_tbl_gid_view(request, tbl_name, gid):
 	return HttpResponse(json_result)	
 
 # View 7: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
-def dbconn1_tbl_pts_pgr_aStarFromAtoB_view(request, tbl_name, long_st, lat_st, long_end, lat_end):
-	cursor = connections['dbconn1'].cursor()
+def dbconn1_tbl_pts_pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_end, lat_end):
+	cursor = connections[username].cursor()
 	cursor.execute("with x as ( "+
 			"SELECT name, cost, geom FROM pgr_aStarFromAtoB(%s, %s, %s, %s, %s) ORDER BY seq) "+
 			"select x.name as name, x.cost as length, st_x(st_startpoint(x.geom)) as long_st, "+ 

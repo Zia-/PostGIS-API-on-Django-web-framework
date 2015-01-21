@@ -69,7 +69,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 # It's the Db name
-        'NAME': 'djangoapi1',
+        'NAME': 'default',
 # Db superuser
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
@@ -78,9 +78,17 @@ DATABASES = {
 # PORT should also be blank if postgresql is running on 5432 port
 	'PORT': '5432',
     },
-    'dbconn1': {
+    'postgisdb': {
 	'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoapi2',
+        'NAME': 'postgisdb',
+	'USER': 'postgres',
+	'PASSWORD': 'zia123',
+	'HOST': '127.0.0.1',
+	'PORT': '5432',
+    },
+    'trafficdb': {
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'trafficdb',
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',

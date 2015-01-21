@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # ex: localhost:8000/postgis/
     # This will run the function named "index" coz of "views.index" in the "views.py" file
     # The use of "name='index'" is not clear
-    url(r'^$', views.index_view, name='index_name'),
+    url(r'^$', views.welcomenote_view, name='welcomenote_name'),
     # This is just an alert message
     url(r'^alert/', views.alert_view, name='alert_name'),
     # This is "default" Db all table_schemas and table_name output
@@ -34,5 +34,7 @@ urlpatterns = patterns('',
     url(r'^post/$', views.post_test, name='post_test'),
     # This is "dbconn1" Db upload file
     url(r'^upload/$', views.upload_test, name='upload_test'),
+    # This is "dbconn1" Db upload file
+    url(r'^uploadresponse/$', views.uploadresponse_test, name='uploadresponse_test'),
     
 )
