@@ -8,6 +8,23 @@ urlpatterns = patterns('',
     # This will run the function named "index" coz of "views.index" in the "views.py" file
     # The use of "name='index'" is not clear
     url(r'^$', views.welcomenote_view, name='welcomenote_name'),
+    # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
+    # Regular expression for decimal numbers : \d+\.\d*
+    # More details on Regular expressions :
+    # https://docs.python.org/2/howto/regex.html
+    # https://docs.python.org/2/library/re.html#re-syntax
+    # https://docs.python.org/2/library/re.html#re.DOTALL
+    url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/pgr_aStarFromAtoB/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+
+
+
+
+
+
+
+
+
+    
     # This is just an alert message
     url(r'^alert/', views.alert_view, name='alert_name'),
     # This is "default" Db all table_schemas and table_name output
@@ -20,14 +37,7 @@ urlpatterns = patterns('',
     # Regular expression for alphabets : \w+
     # Regular expression for numbers (integers) : \d+
     url(r'^(?P<tbl_name>\w+)/(?P<gid>\d+)/dbconn1/$', views.dbconn1_tbl_gid_view, name='dbconn1_tbl_gid_name'),
-    # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
-    # Regular expression for decimal numbers : \d+\.\d*
-    # More details on Regular expressions :
-    # https://docs.python.org/2/howto/regex.html
-    # https://docs.python.org/2/library/re.html#re-syntax
-    # https://docs.python.org/2/library/re.html#re.DOTALL
-    url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/pgr_aStarFromAtoB/$', views.dbconn1_tbl_pts_pgr_aStarFromAtoB_view, name='dbconn1_tbl_pts_pgr_aStarFromAtoB_name'),
-
+    
     # This is "dbconn1" Db template
     url(r'^template/$', views.template_test, name='template_test'),
     # This is "dbconn1" Db post
