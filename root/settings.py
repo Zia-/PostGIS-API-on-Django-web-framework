@@ -40,17 +40,37 @@ INSTALLED_APPS = (
 # No need that the app should be outside the root folder, it could be inside (accd to some
 # reading) but in that case one need to change the urls also accordingly
     'postgis',
+# For CORS, but before that install it "pip install django-cors-headers", 
+# url "https://github.com/ottoyiu/django-cors-headers/". 
+# All the CORS related changes are here in settings.py only
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # For CORS
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'userdetails.middleware.crossdomainxhr.XsSharing',
 )
+# For CORS
+CORS_ORIGIN_ALLOW_ALL = True
+# For CORS
+CORS_ALLOW_METHODS = (
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS'
+    )
+#XS_SHARING_ALLOWED_ORIGINS = '*'
+#XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 
 ROOT_URLCONF = 'root.urls'
 

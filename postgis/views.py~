@@ -101,6 +101,8 @@ def tbl_view(request, username, tbl_name):
 def sql_view(request, username, sql_query):
 	cursor = connections[username].cursor()
 	# I think there is no need to drop this temp table as it will be auto dropped after this whole operation
+	# I am not using this approach to decipher all other functions column names as I don't wanna perform 
+	# this temp table creation operation and the query will be executed twice. Which I think is not good
 	query = "create temp table " + username + " as " + sql_query + " limit 0"
 	cursor.execute(query)
 	query = "select column_name from INFORMATION_SCHEMA.COLUMNS where table_name = '" + username + "';"
@@ -119,7 +121,10 @@ def sql_view(request, username, sql_query):
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 
-
+# View 7: Create buffer taking all the arguments
+def buffer_view(request, username, tbl_name, clmn_name, rad, seg):
+	cursor = connections[username].cursor()
+	
 
 
 
