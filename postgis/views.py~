@@ -43,7 +43,7 @@ def search_view(request, username, tbl_name, clmn_name, search_txt, long_current
 	cursor = connections[username].cursor()
 	# The following approach is the best
 	# "like" will be case sensitive, but "ilike" is not. So I am using "ilike"
-	query = "select name, x, y from " + tbl_name + " where " + clmn_name + " ilike '%" + search_txt + "%' order by the_geom <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")') LIMIT 3"
+	query = "select name, x, y from " + tbl_name + " where " + clmn_name + " ilike '%" + search_txt + "%' order by the_geom <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")', 4326) LIMIT 3"
 	cursor.execute(query)
 	# The following appraoch is giving this kind of error: select name, x, y from 'ways_vertices_pgr' .... Syntex error
 	#cursor.execute("select name, x, y from %s where id = 1"+
@@ -58,7 +58,25 @@ def search_view(request, username, tbl_name, clmn_name, search_txt, long_current
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 
-
+# View 4: List all the exisitng tables inside a given Db along with its size
+def db_view(request, username, db_name):
+	cursor = connections[username].cursor()
+	query = "select pg_database_size('" + db_name + "');"
+	cursor.execute(query)
+	for i in cursor:
+		# Size is in bytes
+		size = i[0]
+	query = "SELECT * FROM information_schema.tables ORDER BY table_schema,table_name;"
+	cursor.execute(query)
+	result = []
+	fields = ['table_catalog', 'table_schema', 'table_name', 'table_type', 'self_referencing_column_name', 'reference_generation', 'user_defined_type_catalog', 'user_defined_type_schema', 'user_defined_type_name', 'is_insertable_into', 'is_typed', 'commit_action', 'db_size']
+	result.append(fields)
+	for i in cursor:
+		row = [i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11], size]
+		result.append(row)
+	json_result = simplejson.dumps(result)
+	return HttpResponse(json_result)
+	
 
 
 
