@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^(?P<username>\w+)/db//$', views.db_view, name='db_name'),
     # This will give the column info a the provided table name 
     url(r'^(?P<username>\w+)/db//tbl/(?P<tbl_name>\w+)/$', views.tbl_view, name='tbl_name'),
+    # Run a custom SQL query
+    # I am using ".+?" coz there will be spaces in a custom SQL query. So to deal with them.
+    url(r'^(?P<username>\w+)/db//(?P<sql_query>.+?)/$', views.sql_view, name='sql_name'),
 
 
 
