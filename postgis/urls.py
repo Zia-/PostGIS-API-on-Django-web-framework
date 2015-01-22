@@ -19,7 +19,21 @@ urlpatterns = patterns('',
     # by the user plus his/her current coord and will show the nearest 3 places with that text.
     url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/(?P<clmn_name>\w+)/(?P<search_txt>\w+)/(?P<long_current>\d+\.\d*)/(?P<lat_current>\d+\.\d*)/$', views.search_view, name='search_name'),
     # This will give the existing tables info about the provided db name 
-    url(r'^(?P<username>\w+)/db/(?P<db_name>\w+)$', views.db_view, name='db_name'),
+    url(r'^(?P<username>\w+)/db//$', views.db_view, name='db_name'),
+    # This will give the column info a the provided table name 
+    url(r'^(?P<username>\w+)/db//tbl/(?P<tbl_name>\w+)/$', views.tbl_view, name='tbl_name'),
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 

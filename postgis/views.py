@@ -59,14 +59,14 @@ def search_view(request, username, tbl_name, clmn_name, search_txt, long_current
 	return HttpResponse(json_result)
 
 # View 4: List all the exisitng tables inside a given Db along with its size (for the time being, there is only one Db for each user)
-def db_view(request, username, db_name):
+def db_view(request, username):
 	cursor = connections[username].cursor()
-	query = "select pg_database_size('" + db_name + "');"
+	query = "select pg_database_size(current_database());"
 	cursor.execute(query)
 	for i in cursor:
 		# Size is in bytes
 		size = i[0]
-	query = "SELECT * FROM information_schema.tables ORDER BY table_schema,table_name;"
+	query = "SELECT * FROM information_schema.tables;"
 	cursor.execute(query)
 	result = []
 	fields = ['table_catalog', 'table_schema', 'table_name', 'table_type', 'self_referencing_column_name', 'reference_generation', 'user_defined_type_catalog', 'user_defined_type_schema', 'user_defined_type_name', 'is_insertable_into', 'is_typed', 'commit_action', 'db_size']
@@ -77,9 +77,24 @@ def db_view(request, username, db_name):
 	json_result = simplejson.dumps(result)
 	return HttpResponse(json_result)
 	
-
-
-
+# View 5: List all the columns of a given "tbl_name"
+def tbl_view(request, username, tbl_name):
+	cursor = connections[username].cursor()
+	query = "select count(*) from " + tbl_name + ""
+	cursor.execute(query)
+	for i in cursor:
+		# Number of rows
+		rows_count = i[0] 
+	query = "select * from INFORMATION_SCHEMA.COLUMNS where table_name = '" + tbl_name + "';"
+	cursor.execute(query)
+	result = []
+	fields = ['table_catalog', 'table_schema', 'table_name', 'column_name', 'ordinal_position', 'column_default', 'is_nullable', 'data_type', 'charaster_maximum_length', 'character_octet_length', 'numeric_precision', 'numeric_precision_radix', 'numeric_scale', 'datetime_precision', 'interval_type', 'interval_precision', 'character_set_catalog', 'character_set_schema', 'character_set_name', 'collation_catalog', 'collation_schema', 'collation_name', 'domain_catalog', 'domain_schema', 'domain_name', 'udt_catalog', 'udt_schema', 'udt_name', 'scope_catalog', 'scope_schema', 'scope_name', 'maximum_cardinality', 'dtd_identifier', 'is_self_referencing', 'is_identity', 'identity_generation', 'identity_start', 'identity_increment', 'identity_maximum', 'identity_minimum', 'identity_cycle', 'is_generated', 'generation_expression', 'is_updatable', 'rows_count']
+	result.append(fields)
+	for i in cursor:
+		row = [i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11], i[12], i[13], i[14], i[15], i[16], i[17], i[18], i[19], i[20], i[21], i[22], i[23], i[24], i[25], i[26], i[27], i[28], i[29], i[30], i[31], i[32], i[33], i[34], i[35], i[36], i[37], i[38], i[39], i[40], i[41], i[42], i[43], rows_count]
+		result.append(row)
+	json_result = simplejson.dumps(result)
+	return HttpResponse(json_result)
 
 
 
