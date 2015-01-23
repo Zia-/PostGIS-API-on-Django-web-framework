@@ -27,9 +27,9 @@ urlpatterns = patterns('',
     url(r'^(?P<username>\w+)/db//sql/(?P<sql_query>.+?)/$', views.sql_view, name='sql_name'),
     # Buffer operation (QGIS was used for the reference)
     # Use this regular expression for positive and negative decimal numbers: (?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)
-    # URl : http://django.arek.uni-obuda.hu/python3-doc/html/library/re.html
+    # URl : 	
     # Another regex: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$ ..... Didn't check though
-    url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features//$', views.buffer_view, name='buffer_name'),
+    url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>.+?)/$', views.buffer_view, name='buffer_name'),
 
 
 
