@@ -69,8 +69,7 @@ CORS_ALLOW_METHODS = (
         'DELETE',
         'OPTIONS'
     )
-#XS_SHARING_ALLOWED_ORIGINS = '*'
-#XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
 
 ROOT_URLCONF = 'root.urls'
 
@@ -109,6 +108,14 @@ DATABASES = {
     'trafficdb': {
 	'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'trafficdb',
+	'USER': 'postgres',
+	'PASSWORD': 'zia123',
+	'HOST': '127.0.0.1',
+	'PORT': '5432',
+    },
+    'zia': {
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'zia',
 	'USER': 'postgres',
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',

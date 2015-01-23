@@ -122,17 +122,27 @@ def sql_view(request, username, sql_query):
 	return HttpResponse(json_result)
 
 # View 7: Create buffer taking all the arguments
-def buffer_view(request, username, tbl_name, clmn_name, rad, seg):
+def buffer_view(request, username, tbl_name, clmn_name, rad, width_clmn, seg):
 	cursor = connections[username].cursor()
-	query = "select st_asewkt(st_buffer(" + clmn_name + ", " + rad + ", 'quad_segs=" + seg + "')) from " + tbl_name + " where gid < 100"
-	cursor.execute(query)
-	result = []
-	#result.append(clmn)
-	for i in cursor:
-		row = i
-		result.append(row)
-	json_result = simplejson.dumps(result)
-	return HttpResponse(json_result)
+	if rad != "-9999":
+		query = "select st_asewkt(st_buffer(" + clmn_name + ", " + rad + ", 'quad_segs=" + seg + "')) from " + tbl_name + ""
+		cursor.execute(query)
+		result = []
+		for i in cursor:
+			row = i
+			result.append(row)
+		json_result = simplejson.dumps(result)
+		return HttpResponse(json_result)
+	else:
+		return HttpResponse("hi")
+
+		
+	
+
+
+
+
+	
 
 
 
