@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    # For Session ID
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -47,6 +48,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # For Session ID
     'django.contrib.sessions.middleware.SessionMiddleware',
     # For CORS
     'corsheaders.middleware.CorsMiddleware',

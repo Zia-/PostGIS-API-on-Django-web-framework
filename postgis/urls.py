@@ -29,7 +29,12 @@ urlpatterns = patterns('',
     # Use this regular expression for positive and negative decimal numbers: (?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)
     # URl : 	
     # Another regex: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$ ..... Didn't check though
-    url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>.+?)/$', views.buffer_view, name='buffer_name'),
+    # IMPORTANT: If want to make ur own custom regex, then in place of \w write [a-zA-Z0-9_]
+    # For example, if you want just positve numbers and spaces, then ur code will be like: (?P<feat_id>[0-9 ]+)
+    # here "[0-9 ]" is imp as it's defining the numbers and spaces and "+" i think defines that there is no limit
+    # "-9999|0-9 " means that either -9999 or the other part will be matched. 
+    # Although I dunno why -9998 and other negative integers are also working 
+    url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>[-9999|0-9 ]+)/$', views.buffer_view, name='buffer_name'),
 
 
 

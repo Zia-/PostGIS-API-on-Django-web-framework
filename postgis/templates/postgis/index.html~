@@ -10,7 +10,7 @@
     <div id="content">
         fsfsdfs
     </div>
-	<form action="/postgis/template/" method="POST">
+	<form action="/postgis/post/" method="POST">
 		{% csrf_token %}
 		Insert: id of post table:<br>
 		<input type="text" name="id" value="">

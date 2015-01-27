@@ -17,12 +17,16 @@ from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from .forms import UploadFileForm
+# For Session ID
+from postgis.models import User_Cred_Roles
 
 # Create your views here.
 
 # View 1: Default welcome note.
 def welcomenote_view(request):
-    return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
+    x = 10
+    return HttpResponse(request.session)
+    #return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
 
 # View 2: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
 def pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_end, lat_end):
@@ -298,10 +302,19 @@ def template_test(request):
 	return HttpResponse(template.render(context))
 	
 # View 8: Post feed Db
-def post_test(request):
+def post_test1(request):
 	if request.method == "POST":
 		#form = ContactForm(request.POST)
 		return HttpResponse(request.POST.get('id'))
+
+def post_test(request):
+	m = User_Cred_Roles.objects.get(email=request.POST['id'])
+    	if m.password == request.POST['pass']:
+        	#request.session['member_id'] = m.id_user
+        	#return HttpResponse("You're logged in.")
+		return HttpResponse(request.session.session_key)
+    	else:
+        	return HttpResponse("Your username and password didn't match.")
 
 # View 9: Post Upload file
 def upload_test(request):
@@ -342,3 +355,14 @@ def uploadresponse_test(request):
         return HttpResponse('false')
     #return HttpResponse("assss")
 
+
+
+
+
+
+
+
+
+
+ke51ojvbthybrgnmj5ov7skzs6o4h3zt
+ke51ojvbthybrgnmj5ov7skzs6o4h3zt
