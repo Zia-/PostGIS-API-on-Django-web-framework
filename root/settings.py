@@ -123,6 +123,24 @@ DATABASES = {
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',
 	'PORT': '5432',
+    },
+    # Making an actual Db in the Db and a corresponding connection here is a MANUAL job
+    # Otherwise soo many Db connections is possible
+    'mohammed.zia33@gmail.com': {
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mohammed.zia33@gmail.com',
+	'USER': 'postgres',
+	'PASSWORD': 'zia123',
+	'HOST': '127.0.0.1',
+	'PORT': '5432',
+    },
+    'ashokyadav006@gmail.com': {
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ashokyadav006@gmail.com',
+	'USER': 'postgres',
+	'PASSWORD': 'zia123',
+	'HOST': '127.0.0.1',
+	'PORT': '5432',
     }
 }
 

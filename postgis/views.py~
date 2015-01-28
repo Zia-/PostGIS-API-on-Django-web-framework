@@ -26,9 +26,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # View 1: Default welcome note.
 def welcomenote_view(request):
-    x = 10
-    return HttpResponse(request.session)
-    #return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
+	return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
 
 # View 8: Register view
 @csrf_exempt
@@ -36,7 +34,12 @@ def register_view(request):
 	cursor = connection.cursor()
 	query = "insert into postgis_user_cred_roles (email, password, pgr_astarfromatob) values ('" + request.POST['email'] + "', '" + request.POST['password'] + "', true)"
 	cursor.execute(query)
-	return HttpResponse('registration success!')
+	response_dic = {}
+	response_dic['status'] = 'registrationsuccess'
+	response_list = []
+	response_list.append(response_dic)
+	json_result = simplejson.dumps(response_list)
+	return HttpResponse(json_result)
 
 # View 9: Log in view
 # For csrf exemption
@@ -58,8 +61,7 @@ def login_view(request):
 	
 			# The following code is just to send the data in a proper format
 			response_dic = {}
-			response_dic[status] = 'loggedin'
-			response_dic[session_key] = request.session.session_key
+			response_dic['status'] = 'loggedin'
 			response_list = []
 			response_list.append(response_dic)
 			json_result = simplejson.dumps(response_list)
@@ -73,14 +75,14 @@ def login_view(request):
 			#	return HttpResponse(request.session.session_key)
 	    	else:
 			response_dic = {}
-			response_dic[status] = 'wrongpassword'
+			response_dic['status'] = 'wrongpassword'
 			response_list = []
 			response_list.append(response_dic)
 			json_result = simplejson.dumps(response_list)
 			return HttpResponse(json_result)
 	else:
 		response_dic = {}
-		response_dic[status] = 'wrongemail'
+		response_dic['status'] = 'wrongemail'
 		response_list = []
 		response_list.append(response_dic)
 		json_result = simplejson.dumps(response_list)
@@ -99,25 +101,52 @@ def logout_view(request):
 	cursor.execute(query)	
 	#request.session.cycle_key()
     	response_dic = {}
-	response_dic[status] = 'loggedout'
+	response_dic['status'] = 'loggedout'
 	response_list = []
 	response_list.append(response_dic)
 	json_result = simplejson.dumps(response_list)
 	return HttpResponse(json_result)	
 
 # View 2: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
-def pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_end, lat_end):
-	cursor = connections[username].cursor()
-	cursor.execute("SELECT name, cost, x1, y1, x2, y2 FROM pgr_aStarFromAtoB(%s, %s, %s, %s, %s) ORDER BY seq", [tbl_name, long_st, lat_st, long_end, lat_end])
-	# Above approach should be used when there are too many arguments
-	result = []
-	fields = ['name', 'length', 'long_st', 'lat_st', 'long_end', 'lat_end']
-	result.append(fields)
-	for i in cursor:
-		row = i
-		result.append(row)
-	json_result = simplejson.dumps(result)
-	return HttpResponse(json_result)
+def pgr_aStarFromAtoB_view(request):
+	if User_Cred_Roles.objects.filter(session_key = request.COOKIES.get('sessionid', '')).count() != 0:
+		db_object = User_Cred_Roles.objects.get(session_key = request.COOKIES.get('sessionid', ''))		
+		if db_object.pgr_astarfromatob:
+			
+			# *** Content within this comment is changeable for each and every other function (except very above line)
+					
+			# Following is the code to obtain the value of "param" variable
+			# Default value is in the nest coutes
+			# You can transfer any number of key value pairs like this from the following url:
+			# http://localhost:8000/postgis/test/?&baz=2&c=10
+			tbl_name = request.GET.get('tbl_name', '')
+			long_st = request.GET.get('long_st', '')
+			lat_st = request.GET.get('lat_st', '')
+			long_end = request.GET.get('long_end', '')
+			lat_end = request.GET.get('lat_end', '')
+			cursor = connections[db_object.email].cursor()
+			cursor.execute("SELECT name, cost, x1, y1, x2, y2 FROM pgr_aStarFromAtoB(%s, %s, %s, %s, %s) ORDER BY seq", [tbl_name, long_st, lat_st, long_end, lat_end])
+			# Following is the code to send the SQL info in the desired format	
+			response_list = []
+			for i in cursor:
+				response_dic = {}
+				response_dic['name'] = i[0]
+				response_dic['length'] = i[1]
+				response_dic['long_st'] = i[2]
+				response_dic['lat_st'] = i[3]
+				response_dic['long_end'] = i[4]
+				response_dic['lat_end'] = i[5]
+				response_list.append(response_dic)
+			json_result = simplejson.dumps(response_list)
+			return HttpResponse(json_result)
+
+			# *** Content within this comment is changeable for each and every other function
+
+		else:
+			return HttpResponse('notallowedforthisfun')
+	else:
+		return HttpResponse('needstologin')
+
 
 # View 3: This is for the search functionality. It will take the text argument, been typed by by the user plus his/her current coord and will show the nearest 3 places with that text.
 def search_view(request, username, tbl_name, clmn_name, search_txt, long_current, lat_current):
@@ -259,6 +288,7 @@ def buffer_view(request, username, tbl_name, clmn_name, rad, width_clmn, seg, fe
 			return HttpResponse(json_result)
 
 	
+
 	
 
 

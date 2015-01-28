@@ -8,13 +8,27 @@ urlpatterns = patterns('',
     # This will run the function named "index" coz of "views.index" in the "views.py" file
     # The use of "name='index'" is not clear
     url(r'^$', views.welcomenote_view, name='welcomenote_name'),
+    # For register in default Db
+    url(r'^register/$', views.register_view, name='register_name'),
+    # For login
+    url(r'^login/$', views.login_view, name='login_name'),
+    # For logout
+    url(r'^logout/$', views.logout_view, name='logout_name'),
+    # For test
+    url(r'^pgr_aStarFromAtoB/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+
+
+
+
+
+
     # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
     # Regular expression for decimal numbers : \d+\.\d*
     # More details on Regular expressions :
     # https://docs.python.org/2/howto/regex.html
     # https://docs.python.org/2/library/re.html#re-syntax
     # https://docs.python.org/2/library/re.html#re.DOTALL
-    url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/pgr_aStarFromAtoB/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+    #url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/pgr_aStarFromAtoB/(?P<long_st>\d+\.\d*)/(?P<lat_st>\d+\.\d*)/(?P<long_end>\d+\.\d*)/(?P<lat_end>\d+\.\d*)/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
     # This is for the search functionality. It will take the text argument, been typed by
     # by the user plus his/her current coord and will show the nearest 3 places with that text.
     url(r'^(?P<username>\w+)/(?P<tbl_name>\w+)/(?P<clmn_name>\w+)/(?P<search_txt>\w+)/(?P<long_current>\d+\.\d*)/(?P<lat_current>\d+\.\d*)/$', views.search_view, name='search_name'),
@@ -35,12 +49,7 @@ urlpatterns = patterns('',
     # "-9999|0-9 " means that either -9999 or the other part will be matched. 
     # Although I dunno why -9998 and other negative integers are also working 
     url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>[-9999|0-9 ]+)/$', views.buffer_view, name='buffer_name'),
-    # For register in default Db
-    url(r'^register/$', views.register_view, name='register_name'),
-    # For login
-    url(r'^login/$', views.login_view, name='login_name'),
-    # For logout
-    url(r'^logout/$', views.logout_view, name='logout_name'),
+    
 
 
 

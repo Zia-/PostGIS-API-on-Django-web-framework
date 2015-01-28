@@ -14,6 +14,14 @@ urlpatterns = patterns('',
     url(r'^login/$', views.login_view, name='login_name'),
     # For logout
     url(r'^logout/$', views.logout_view, name='logout_name'),
+    # For test
+    url(r'^pgr_aStarFromAtoB/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+
+
+
+
+
+
     # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
     # Regular expression for decimal numbers : \d+\.\d*
     # More details on Regular expressions :
