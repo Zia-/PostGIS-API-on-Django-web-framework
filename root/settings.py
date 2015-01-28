@@ -53,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     # For CORS
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # For CSRF
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -78,7 +79,7 @@ ROOT_URLCONF = 'root.urls'
 WSGI_APPLICATION = 'root.wsgi.application'
 
 TEMPLATE_CONTEXT_PROCESSOR = (
-	# We need this to allow csrf from templates
+	# For CSRF. We need this to allow csrf from templates
 	'django.core.context_processors.csrf',
 )
 

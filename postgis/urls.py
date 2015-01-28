@@ -8,6 +8,12 @@ urlpatterns = patterns('',
     # This will run the function named "index" coz of "views.index" in the "views.py" file
     # The use of "name='index'" is not clear
     url(r'^$', views.welcomenote_view, name='welcomenote_name'),
+    # For register in default Db
+    url(r'^register/$', views.register_view, name='register_name'),
+    # For login
+    url(r'^login/$', views.login_view, name='login_name'),
+    # For logout
+    url(r'^logout/$', views.logout_view, name='logout_name'),
     # This is "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
     # Regular expression for decimal numbers : \d+\.\d*
     # More details on Regular expressions :
@@ -35,7 +41,7 @@ urlpatterns = patterns('',
     # "-9999|0-9 " means that either -9999 or the other part will be matched. 
     # Although I dunno why -9998 and other negative integers are also working 
     url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>[-9999|0-9 ]+)/$', views.buffer_view, name='buffer_name'),
-
+    
 
 
 
@@ -76,8 +82,10 @@ urlpatterns = patterns('',
     
     # This is "dbconn1" Db template
     url(r'^template/$', views.template_test, name='template_test'),
-    # This is "dbconn1" Db post
-    url(r'^post/$', views.post_test, name='post_test'),
+    # This is "dbconn1" Db login
+    ##url(r'^login/$', views.login_test, name='login_test'),
+    # This is "dbconn1" Db logout
+    ##url(r'^logout/$', views.logout_test, name='logout_test'),
     # This is "dbconn1" Db upload file
     url(r'^upload/$', views.upload_test, name='upload_test'),
     # This is "dbconn1" Db upload file

@@ -19,6 +19,8 @@ from django.shortcuts import render_to_response
 from .forms import UploadFileForm
 # For Session ID
 from postgis.models import User_Cred_Roles
+# For CSRF exemption (by default it's active)
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -27,6 +29,81 @@ def welcomenote_view(request):
     x = 10
     return HttpResponse(request.session)
     #return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
+
+# View 8: Register view
+@csrf_exempt
+def register_view(request):
+	cursor = connection.cursor()
+	query = "insert into postgis_user_cred_roles (email, password, pgr_astarfromatob) values ('" + request.POST['email'] + "', '" + request.POST['password'] + "', true)"
+	cursor.execute(query)
+	return HttpResponse('registration success!')
+
+# View 9: Log in view
+# For csrf exemption
+@csrf_exempt
+def login_view(request):
+	# To check if there is a row with the provided email ID?
+	if User_Cred_Roles.objects.filter(email = request.POST['email']).count() != 0:
+		m = User_Cred_Roles.objects.get(email=request.POST['email'])
+	    	if m.password == request.POST['password']:
+			#if not request.session.exists(request.session.session_key):
+    			request.session.create() 
+			request.session['session_email'] = request.POST['email']
+				# Here I'll first of all feed the Db's "session_key" column with the current session_key value
+				# And then will return the session_key value to the browser
+			cursor = connection.cursor()
+			query = "update postgis_user_cred_roles set (session_key) = ('" + str(request.session.session_key) + "') where email = '" + request.session['session_email'] + "'"
+			cursor.execute(query)
+			#request.session['your_session'] = request.session.session_key
+	
+			# The following code is just to send the data in a proper format
+			response_dic = {}
+			response_dic[status] = 'loggedin'
+			response_dic[session_key] = request.session.session_key
+			response_list = []
+			response_list.append(response_dic)
+			json_result = simplejson.dumps(response_list)
+			return HttpResponse(json_result)
+			#else:
+			#	request.session['session_email'] = request.POST['email']
+			#	cursor = connection.cursor()
+			#	query = "update postgis_user_cred_roles set (session_key) = ('" + str(request.session.session_key) + "') where email = '" + request.POST['email'] + "'"
+			#	cursor.execute(query)
+			#request.session['your_session'] = request.session.session_key
+			#	return HttpResponse(request.session.session_key)
+	    	else:
+			response_dic = {}
+			response_dic[status] = 'wrongpassword'
+			response_list = []
+			response_list.append(response_dic)
+			json_result = simplejson.dumps(response_list)
+			return HttpResponse(json_result)
+	else:
+		response_dic = {}
+		response_dic[status] = 'wrongemail'
+		response_list = []
+		response_list.append(response_dic)
+		json_result = simplejson.dumps(response_list)
+		return HttpResponse(json_result)
+
+# View 10: Log out view
+@csrf_exempt
+def logout_view(request):
+	#try:
+        	#del request.session['your_session']
+		#request.session.clear() 
+    	#except KeyError:
+        	#pass
+	cursor = connection.cursor()
+	query = "update postgis_user_cred_roles set session_key = null where email = '" + request.session['session_email'] + "'"
+	cursor.execute(query)	
+	#request.session.cycle_key()
+    	response_dic = {}
+	response_dic[status] = 'loggedout'
+	response_list = []
+	response_list.append(response_dic)
+	json_result = simplejson.dumps(response_list)
+	return HttpResponse(json_result)	
 
 # View 2: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
 def pgr_aStarFromAtoB_view(request, username, tbl_name, long_st, lat_st, long_end, lat_end):
@@ -181,7 +258,7 @@ def buffer_view(request, username, tbl_name, clmn_name, rad, width_clmn, seg, fe
 			json_result = simplejson.dumps(result)
 			return HttpResponse(json_result)
 
-		
+	
 	
 
 
@@ -307,14 +384,7 @@ def post_test1(request):
 		#form = ContactForm(request.POST)
 		return HttpResponse(request.POST.get('id'))
 
-def post_test(request):
-	m = User_Cred_Roles.objects.get(email=request.POST['id'])
-    	if m.password == request.POST['pass']:
-        	#request.session['member_id'] = m.id_user
-        	#return HttpResponse("You're logged in.")
-		return HttpResponse(request.session.session_key)
-    	else:
-        	return HttpResponse("Your username and password didn't match.")
+
 
 # View 9: Post Upload file
 def upload_test(request):
