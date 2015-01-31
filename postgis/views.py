@@ -23,6 +23,7 @@ from postgis.models import User_Cred_Roles
 # For CSRF exemption (by default it's active)
 from django.views.decorators.csrf import csrf_exempt
 
+
 # Create your views here.
 
 # These are different http status
@@ -34,6 +35,7 @@ status_200['message'] = 'Request completed fine, no errors'
 
 # View 1: Default welcome note.
 def welcomenote_view(request):
+	# Below is the exact JSON reponse in which we are supposed to send the data
         data_content = {}
         data_content['response'] = 'Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!'
 	response = {'data' : data_content, 'status' : status_200}
@@ -45,12 +47,10 @@ def register_view(request):
 	cursor = connection.cursor()
 	query = "insert into postgis_user_cred_roles (email, password, pgr_astarfromatob) values ('" + request.POST['email'] + "', '" + request.POST['password'] + "', true)"
 	cursor.execute(query)
-	response_dic = {}
-	response_dic['status'] = 'registrationsuccess'
-	response_list = []
-	response_list.append(response_dic)
-	json_result = simplejson.dumps(response_list)
-	return HttpResponse(json_result)
+	data_content = {}
+	data_content['response'] = 'registration success'
+	response = {'data' : data_content, 'status' : status_200}
+	return HttpResponse( json.dumps( response ) )
 
 # View 9: Log in view
 # For csrf exemption
@@ -71,12 +71,10 @@ def login_view(request):
 			#request.session['your_session'] = request.session.session_key
 	
 			# The following code is just to send the data in a proper format
-			response_dic = {}
-			response_dic['status'] = 'loggedin'
-			response_list = []
-			response_list.append(response_dic)
-			json_result = simplejson.dumps(response_list)
-			return HttpResponse(json_result)
+			data_content = {}
+			data_content['response'] = 'logged in'
+			response = {'data' : data_content, 'status' : status_200}
+			return HttpResponse( json.dumps( response ) )
 			#else:
 			#	request.session['session_email'] = request.POST['email']
 			#	cursor = connection.cursor()
@@ -85,19 +83,15 @@ def login_view(request):
 			#request.session['your_session'] = request.session.session_key
 			#	return HttpResponse(request.session.session_key)
 	    	else:
-			response_dic = {}
-			response_dic['status'] = 'wrongpassword'
-			response_list = []
-			response_list.append(response_dic)
-			json_result = simplejson.dumps(response_list)
-			return HttpResponse(json_result)
+			data_content = {}
+			data_content['response'] = 'wrong password'
+			response = {'data' : data_content, 'status' : status_200}
+			return HttpResponse( json.dumps( response ) )
 	else:
-		response_dic = {}
-		response_dic['status'] = 'wrongemail'
-		response_list = []
-		response_list.append(response_dic)
-		json_result = simplejson.dumps(response_list)
-		return HttpResponse(json_result)
+		data_content = {}
+		data_content['response'] = 'wrong email'
+		response = {'data' : data_content, 'status' : status_200}
+		return HttpResponse( json.dumps( response ) )
 
 # View 10: Log out view
 @csrf_exempt
@@ -111,12 +105,73 @@ def logout_view(request):
 	query = "update postgis_user_cred_roles set session_key = null where email = '" + request.session['session_email'] + "'"
 	cursor.execute(query)	
 	#request.session.cycle_key()
-    	response_dic = {}
-	response_dic['status'] = 'loggedout'
-	response_list = []
-	response_list.append(response_dic)
-	json_result = simplejson.dumps(response_list)
-	return HttpResponse(json_result)	
+    	data_content = {}
+	data_content['response'] = 'logged out'
+	response = {'data' : data_content, 'status' : status_200}
+	return HttpResponse( json.dumps( response ) )	
+
+# View Special: Below views are not using SessionID
+def pgr_aStarFromAtoB_without_SessionID_view(request):
+	long_st = request.GET.get('long_st', '')
+	lat_st = request.GET.get('lat_st', '')
+	long_end = request.GET.get('long_end', '')
+	lat_end = request.GET.get('lat_end', '')
+	cursor = connections['postgisdb'].cursor()
+	cursor.execute("SELECT name, cost, st_asgeojson(geom) FROM pgr_aStarFromAtoB('ways', %s, %s, %s, %s) ORDER BY seq", [long_st, lat_st, long_end, lat_end])
+	# Below is the exact GeoJSON response in which we are supposed to send the data
+	data_content = {}
+	features = []
+	for i in cursor:
+		feature = {}
+		# json.loads will remove double quotes and other useless / from geojson which we are getting from SQL response
+		geom = json.loads(i[2])
+		feature['geometry'] = geom
+		attr = {'name' : i[0], 'length' : i[1]}
+		feature['attributes'] = attr
+		features.append(feature)
+	data_content['features'] = features
+	response = {'data' : data_content, 'status' : status_200}
+	return HttpResponse( json.dumps( response ) )
+
+def search_without_SessionID_view(request):
+	long_current = request.GET.get('long_current', '')
+	lat_current = request.GET.get('lat_current', '')
+	search_txt = request.GET.get('search_txt', '')
+	cursor = connections['postgisdb'].cursor()
+	# The following approach is the best
+	# "like" will be case sensitive, but "ilike" is not. So I am using "ilike"
+	query = "select name, x, y from ways_vertices_pgr where name ilike '%" + search_txt + "%' order by the_geom <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")', 4326) LIMIT 3"
+	cursor.execute(query)
+	# The following appraoch is giving this kind of error: select name, x, y from 'ways_vertices_pgr' .... Syntex error
+	#cursor.execute("select name, x, y from %s where id = 1"+
+	#		"order by the_geom <-> ST_GeomFromText('POINT(%s %s)')"+ 		
+	#		"LIMIT 3", [tbl_name, clmn_name, long_current, lat_current])	
+
+	# The following approach is another form of GeoJSON approach but for normal data, not the "st_asgeojson()" converted one
+	data_content = {}
+	features = []
+	for i in cursor:
+		feature = {}
+		feature['name'] = i[0]		
+		feature['long'] = i[1]
+		feature['lat'] = i[2]
+		features.append(feature)
+	data_content['features'] = features
+	response = {'data' : data_content, 'status' : status_200}
+	return HttpResponse( json.dumps( response ) )
+
+
+
+'''
+	result = []
+	fields = ['name', 'x', 'y']
+	result.append(fields)
+	for i in cursor:
+		row = i
+		result.append(row)
+	json_result = simplejson.dumps(result)
+	return HttpResponse(json_result)'''
+# View Special: Above views are not using SessionID
 
 # View 2: "dbconn1" Db = a particular table and route between two points using pgr_aStarFromAtoB()
 def pgr_aStarFromAtoB_view(request):

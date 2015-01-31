@@ -14,8 +14,23 @@ urlpatterns = patterns('',
     url(r'^login/$', views.login_view, name='login_name'),
     # For logout
     url(r'^logout/$', views.logout_view, name='logout_name'),
-    # For test
+    # For routing
     url(r'^pgr_aStarFromAtoB/$', views.pgr_aStarFromAtoB_view, name='pgr_aStarFromAtoB_name'),
+
+
+
+
+
+
+
+
+
+    # For functions not using SessionID
+    url(r'^pgr_aStarFromAtoB_without_SessionID/$', views.pgr_aStarFromAtoB_without_SessionID_view, name='pgr_aStarFromAtoB_without_SessionID_name'),
+    url(r'^search_without_SessionID/$', views.search_without_SessionID_view, name='search_without_SessionID_name'),
+
+
+
 
 
 
