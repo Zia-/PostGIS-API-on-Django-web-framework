@@ -6,6 +6,7 @@ from django.db import connection
 from django.db import connections
 # For simplejson output during return stage
 import json as simplejson
+import json
 import os
 # To use templates created under the postgis/templates/postgis dir
 	# we have created another postgis dir after templates coz Django
@@ -24,9 +25,19 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
+# These are different http status
+# 200
+status_200 = {}
+status_200['code'] = 200
+status_200['message'] = 'Request completed fine, no errors'
+#
+
 # View 1: Default welcome note.
 def welcomenote_view(request):
-	return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
+        data_content = {}
+        data_content['response'] = 'Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!'
+	response = {'data' : data_content, 'status' : status_content}
+	return HttpResponse( json.dumps( response ) )
 
 # View 8: Register view
 @csrf_exempt
@@ -111,6 +122,8 @@ def logout_view(request):
 def pgr_aStarFromAtoB_view(request):
 	if User_Cred_Roles.objects.filter(session_key = request.COOKIES.get('sessionid', '')).count() != 0:
 		db_object = User_Cred_Roles.objects.get(session_key = request.COOKIES.get('sessionid', ''))		
+		# "if db_object.pgr_astarfromatob" checks if it's true or false. There is no need to right like
+		# "if db_object.pgr_astarfromatob == TRUE" or something as the pgr_astarfromatob column value is itself boolean	
 		if db_object.pgr_astarfromatob:
 			
 			# *** Content within this comment is changeable for each and every other function (except very above line)

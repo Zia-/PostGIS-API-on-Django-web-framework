@@ -6,6 +6,7 @@ from django.db import connection
 from django.db import connections
 # For simplejson output during return stage
 import json as simplejson
+import json
 import os
 # To use templates created under the postgis/templates/postgis dir
 	# we have created another postgis dir after templates coz Django
@@ -24,9 +25,19 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
+# These are different http status
+# 200
+status_200 = {}
+status_200['code'] = 200
+status_200['message'] = 'Request completed fine, no errors'
+#
+
 # View 1: Default welcome note.
 def welcomenote_view(request):
-	return HttpResponse("Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!")
+        data_content = {}
+        data_content['response'] = 'Welcome to National Innovation and Research Center for Geographical Information Technologies PostGIS Web-Server API Services!'
+	response = {'data' : data_content, 'status' : status_200}
+	return HttpResponse( json.dumps( response ) )
 
 # View 8: Register view
 @csrf_exempt
