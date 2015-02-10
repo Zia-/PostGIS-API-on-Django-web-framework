@@ -7,12 +7,11 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('postgis', '0002_user_cred_roles_pgr_fromastarfromatob1'),
+        ('postgis', '0010_test'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='user_cred_roles',
-            name='pgr_fromastarfromatob1',
+        migrations.DeleteModel(
+            name='User_Cred_Roles',
         ),
     ]

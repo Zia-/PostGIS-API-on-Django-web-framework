@@ -45,6 +45,7 @@ INSTALLED_APPS = (
 # url "https://github.com/ottoyiu/django-cors-headers/". 
 # All the CORS related changes are here in settings.py only
     'corsheaders',
+    'raster',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -162,3 +163,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+RASTER_USE_CELERY = True

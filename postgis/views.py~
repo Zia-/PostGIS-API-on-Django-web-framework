@@ -118,37 +118,20 @@ def pgr_aStarFromAtoB_without_SessionID_view(request):
 	lat_end = request.GET.get('lat_end', '')
 	cursor = connections['postgisdb'].cursor()
 	cursor.execute("SELECT name, cost, st_asgeojson(geom) FROM pgr_aStarFromAtoB('ways', %s, %s, %s, %s) ORDER BY seq", [long_st, lat_st, long_end, lat_end])
-	# Below is the exact GeoJSON response in which we are supposed to send the data so that OL can draw the lines without Looping
+	# Below is the exact GeoJSON response in which we are supposed to send the data
 	data_content = {}
 	features = []
 	for i in cursor:
 		feature = {}
 		# json.loads will remove double quotes and other useless / from geojson which we are getting from SQL response
 		geom = json.loads(i[2])
-		feature['type'] = 'Feature'
 		feature['geometry'] = geom
-		prop = {'name' : i[0], 'length' : i[1]}
-		feature['properties'] = prop
+		attr = {'name' : i[0], 'length' : i[1]}
+		feature['attributes'] = attr
 		features.append(feature)
 	data_content['features'] = features
-	data_content['type'] = 'FeatureCollection'
-	response = data_content
+	response = {'data' : data_content, 'status' : status_200}
 	return HttpResponse( json.dumps( response ) )
-	'''
-	# Below is an extened GeoJSON format with Status message, but not using coz OL can't understand this format
-	data_content = {}
-        features = []
-        for i in cursor:
-                feature = {}
-                geom = json.loads(i[2])
-                feature['geometry'] = geom
-                attr = {'name' : i[0], 'length' : i[1]}
-                feature['attributes'] = attr
-                features.append(feature)
-        data_content['features'] = features
-        response = {'data' : data_content, 'status' : status_200}
-        return HttpResponse( json.dumps( response ) )
-	'''
 
 def search_without_SessionID_view(request):
 	long_current = request.GET.get('long_current', '')

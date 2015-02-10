@@ -45,6 +45,7 @@ INSTALLED_APPS = (
 # url "https://github.com/ottoyiu/django-cors-headers/". 
 # All the CORS related changes are here in settings.py only
     'corsheaders',
+    'raster',
 )
 
 MIDDLEWARE_CLASSES = (

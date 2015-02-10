@@ -1,0 +1,18 @@
+[Tue Feb 10 17:55:02.521288 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056] mod_wsgi (pid=8735): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:55:02.521494 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056] mod_wsgi (pid=8735): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:55:02.521553 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056] Traceback (most recent call last):
+[Tue Feb 10 17:55:02.521606 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 12, in <module>
+[Tue Feb 10 17:55:02.521772 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056]     sys.path.append('/home/zia/Documents/Codes/Django/sql_api/root')
+[Tue Feb 10 17:55:02.521828 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:12056] NameError: name 'sys' is not defined
+[Tue Feb 10 17:55:04.020866 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053] mod_wsgi (pid=8735): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:55:04.020905 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053] mod_wsgi (pid=8735): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:55:04.020934 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053] Traceback (most recent call last):
+[Tue Feb 10 17:55:04.020978 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 12, in <module>
+[Tue Feb 10 17:55:04.021021 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053]     sys.path.append('/home/zia/Documents/Codes/Django/sql_api/root')
+[Tue Feb 10 17:55:04.021047 2015] [:error] [pid 8735:tid 140475596367616] [remote 127.0.0.1:34053] NameError: name 'sys' is not defined
+[Tue Feb 10 17:55:04.841048 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725] mod_wsgi (pid=8735): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:55:04.841097 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725] mod_wsgi (pid=8735): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:55:04.841122 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725] Traceback (most recent call last):
+[Tue Feb 10 17:55:04.841145 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 12, in <module>
+[Tue Feb 10 17:55:04.841177 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725]     sys.path.append('/home/zia/Documents/Codes/Django/sql_api/root')
+[Tue Feb 10 17:55:04.841198 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725] NameError: name 'sys' is not defined

@@ -10,3 +10,6 @@ class User_Cred_Roles(models.Model):
 	password = models.CharField(max_length=100)
 	pgr_astarfromatob = models.BooleanField(default=False) 
 
+class test(models.Model):
+        # Details at https://docs.djangoproject.com/en/1.7/ref/models/fields/#e$
+        id_user = models.AutoField(primary_key=True)
