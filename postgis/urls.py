@@ -64,7 +64,12 @@ urlpatterns = patterns('',
     # "-9999|0-9 " means that either -9999 or the other part will be matched. 
     # Although I dunno why -9998 and other negative integers are also working 
     url(r'^(?P<username>\w+)/db//buffer/tbl/(?P<tbl_name>\w+)/clmn/(?P<clmn_name>\w+)/radius/(?P<rad>[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)/(?P<width_clmn>\w+)/segments/(?P<seg>\d+)/features/(?P<feat_id>[-9999|0-9 ]+)/$', views.buffer_view, name='buffer_name'),
-    
+    # Campus_ITU_Maslak: This is for the search functionality. It will take the text argument, been typed by
+    # by the user plus his/her current coord and will show the nearest 3 places with that text.
+    url(r'^(?P<search_txt>\w+)/(?P<long_current>\d+\.\d*)/(?P<lat_current>\d+\.\d*)/$', views.campus_itu_maslak_search_view, name='campus_itu_maslak_search_view_name'),
+# Campus ITU Maslak urls
+    url(r'^campus_itu_maslak_pgr_aStarFromAtoB_without_SessionID/$', views.campus_itu_maslak_pgr_aStarFromAtoB_without_SessionID_view, name='campus_itu_maslak_pgr_aStarFromAtoB_without_SessionID_name'),
+    url(r'^campus_itu_maslak_search_without_SessionID/$', views.campus_itu_maslak_search_without_SessionID_view, name='campus_itu_maslak_search_without_SessionID_name'),
 
 
 

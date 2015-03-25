@@ -1,6 +1,6 @@
 from django.contrib import admin
-#from postgis.models import test
+from postgis.models import test
 
 # Register your models here.
 
-#admin.site.register(test)
+admin.site.register(test)

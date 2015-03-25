@@ -216,7 +216,7 @@ def pgr_aStarFromAtoB_view(request):
 		return HttpResponse('needstologin')
 
 
-# View 3: This is for the search functionality. It will take the text argument, been typed by by the user plus his/her current coord and will show the nearest 3 places with that text.
+# View 3: This is for the search functionality. It will take the text argument, been typed by the user plus his/her current coord and will show the nearest 3 places with that text.
 def search_view(request, username, tbl_name, clmn_name, search_txt, long_current, lat_current):
 	cursor = connections[username].cursor()
 	# The following approach is the best
@@ -355,6 +355,19 @@ def buffer_view(request, username, tbl_name, clmn_name, rad, width_clmn, seg, fe
 			json_result = simplejson.dumps(result)
 			return HttpResponse(json_result)
 
+# View 8: Campus_ITU_Maslak - This is for the search functionality. It will take the text argument, been typed by the user plus his/her current coord and will show the nearest 3 places with that text.
+def campus_itu_maslak_search_view(request, search_txt, long_current, lat_current):
+	cursor = connections[campus_itu_maslak].cursor()
+	query = "select name, x, y from buildings where name ilike '%" + search_txt + "%' order by the_geom <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")', 4326) LIMIT 3"
+	cursor.execute(query)
+	result = []
+	fields = ['name', 'x', 'y']
+	result.append(fields)
+	for i in cursor:
+		row = i
+		result.append(row)
+	json_result = simplejson.dumps(result)
+	return HttpResponse(json_result)
 	
 
 	

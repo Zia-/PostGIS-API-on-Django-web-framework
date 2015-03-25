@@ -142,6 +142,14 @@ DATABASES = {
 	'PASSWORD': 'zia123',
 	'HOST': '127.0.0.1',
 	'PORT': '5432',
+    },
+    'campus_itu_maslak': {
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'campus_itu_maslak',
+	'USER': 'postgres',
+	'PASSWORD': 'zia123',
+	'HOST': '127.0.0.1',
+	'PORT': '5432',
     }
 }
 

@@ -16,3 +16,75 @@
 [Tue Feb 10 17:55:04.841145 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 12, in <module>
 [Tue Feb 10 17:55:04.841177 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725]     sys.path.append('/home/zia/Documents/Codes/Django/sql_api/root')
 [Tue Feb 10 17:55:04.841198 2015] [:error] [pid 8735:tid 140475797997312] [remote 127.0.0.1:30725] NameError: name 'sys' is not defined
+[Tue Feb 10 17:57:23.770084 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816] mod_wsgi (pid=12088): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:57:23.770129 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816] mod_wsgi (pid=12088): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:57:23.770149 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816] Traceback (most recent call last):
+[Tue Feb 10 17:57:23.770165 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 16, in <module>
+[Tue Feb 10 17:57:23.770210 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     application = get_wsgi_application()
+[Tue Feb 10 17:57:23.770231 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Feb 10 17:57:23.770262 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     django.setup()
+[Tue Feb 10 17:57:23.770272 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/__init__.py", line 21, in setup
+[Tue Feb 10 17:57:23.770300 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     apps.populate(settings.INSTALLED_APPS)
+[Tue Feb 10 17:57:23.770310 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/apps/registry.py", line 115, in populate
+[Tue Feb 10 17:57:23.770417 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     app_config.ready()
+[Tue Feb 10 17:57:23.770428 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/contrib/admin/apps.py", line 22, in ready
+[Tue Feb 10 17:57:23.781773 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     self.module.autodiscover()
+[Tue Feb 10 17:57:23.781806 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/contrib/admin/__init__.py", line 23, in autodiscover
+[Tue Feb 10 17:57:23.793399 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     autodiscover_modules('admin', register_to=site)
+[Tue Feb 10 17:57:23.793450 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/utils/module_loading.py", line 74, in autodiscover_modules
+[Tue Feb 10 17:57:23.806791 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     import_module('%s.%s' % (app_config.name, module_to_search))
+[Tue Feb 10 17:57:23.806838 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+[Tue Feb 10 17:57:23.806928 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     __import__(name)
+[Tue Feb 10 17:57:23.806946 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]   File "/home/zia/Documents/Codes/Django/sql_api/postgis/admin.py", line 5, in <module>
+[Tue Feb 10 17:57:23.806997 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816]     admin.site.register(RasterLayer)
+[Tue Feb 10 17:57:23.807030 2015] [:error] [pid 12088:tid 140189650319104] [remote 127.0.0.1:29816] NameError: name 'RasterLayer' is not defined
+[Tue Feb 10 17:58:14.159615 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491] mod_wsgi (pid=12242): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:58:14.159660 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491] mod_wsgi (pid=12242): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:58:14.159690 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491] Traceback (most recent call last):
+[Tue Feb 10 17:58:14.159711 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 16, in <module>
+[Tue Feb 10 17:58:14.159767 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     application = get_wsgi_application()
+[Tue Feb 10 17:58:14.159780 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Feb 10 17:58:14.159818 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     django.setup()
+[Tue Feb 10 17:58:14.159828 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/__init__.py", line 21, in setup
+[Tue Feb 10 17:58:14.159856 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     apps.populate(settings.INSTALLED_APPS)
+[Tue Feb 10 17:58:14.159865 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/apps/registry.py", line 115, in populate
+[Tue Feb 10 17:58:14.159973 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     app_config.ready()
+[Tue Feb 10 17:58:14.159992 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/contrib/admin/apps.py", line 22, in ready
+[Tue Feb 10 17:58:14.160034 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     self.module.autodiscover()
+[Tue Feb 10 17:58:14.160046 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/contrib/admin/__init__.py", line 23, in autodiscover
+[Tue Feb 10 17:58:14.160088 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     autodiscover_modules('admin', register_to=site)
+[Tue Feb 10 17:58:14.160098 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/utils/module_loading.py", line 74, in autodiscover_modules
+[Tue Feb 10 17:58:14.160155 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     import_module('%s.%s' % (app_config.name, module_to_search))
+[Tue Feb 10 17:58:14.160166 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+[Tue Feb 10 17:58:14.160196 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     __import__(name)
+[Tue Feb 10 17:58:14.160205 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]   File "/home/zia/Documents/Codes/Django/sql_api/postgis/admin.py", line 2, in <module>
+[Tue Feb 10 17:58:14.160230 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491]     from postgis.models import RasterLayer
+[Tue Feb 10 17:58:14.160244 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:7491] ImportError: cannot import name RasterLayer
+[Tue Feb 10 17:58:15.835725 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232] mod_wsgi (pid=12242): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 17:58:15.835756 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232] mod_wsgi (pid=12242): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 17:58:15.835774 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232] Traceback (most recent call last):
+[Tue Feb 10 17:58:15.835796 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 16, in <module>
+[Tue Feb 10 17:58:15.835821 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]     application = get_wsgi_application()
+[Tue Feb 10 17:58:15.835830 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Feb 10 17:58:15.835846 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]     django.setup()
+[Tue Feb 10 17:58:15.835855 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/__init__.py", line 21, in setup
+[Tue Feb 10 17:58:15.835878 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]     apps.populate(settings.INSTALLED_APPS)
+[Tue Feb 10 17:58:15.835887 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/apps/registry.py", line 78, in populate
+[Tue Feb 10 17:58:15.835899 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232]     raise RuntimeError("populate() isn't reentrant")
+[Tue Feb 10 17:58:15.835913 2015] [:error] [pid 12242:tid 140162783942400] [remote 127.0.0.1:29232] RuntimeError: populate() isn't reentrant
+[Tue Feb 10 18:00:07.021451 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232] mod_wsgi (pid=12242): Target WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py' cannot be loaded as Python module.
+[Tue Feb 10 18:00:07.021538 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232] mod_wsgi (pid=12242): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 18:00:07.021600 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232] Traceback (most recent call last):
+[Tue Feb 10 18:00:07.021666 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]   File "/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py", line 16, in <module>
+[Tue Feb 10 18:00:07.021708 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]     application = get_wsgi_application()
+[Tue Feb 10 18:00:07.021718 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/core/wsgi.py", line 14, in get_wsgi_application
+[Tue Feb 10 18:00:07.021735 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]     django.setup()
+[Tue Feb 10 18:00:07.021744 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/__init__.py", line 21, in setup
+[Tue Feb 10 18:00:07.021757 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]     apps.populate(settings.INSTALLED_APPS)
+[Tue Feb 10 18:00:07.021766 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]   File "/usr/local/lib/python2.7/dist-packages/Django-1.7.1-py2.7.egg/django/apps/registry.py", line 78, in populate
+[Tue Feb 10 18:00:07.021779 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232]     raise RuntimeError("populate() isn't reentrant")
+[Tue Feb 10 18:00:07.021793 2015] [:error] [pid 12242:tid 140162985572096] [remote 127.0.0.1:29232] RuntimeError: populate() isn't reentrant
+[Tue Feb 10 18:22:32.051546 2015] [:error] [pid 14023:tid 140561835906816] [remote 127.0.0.1:61984] mod_wsgi (pid=14023): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 18:22:32.051634 2015] [:error] [pid 14023:tid 140561835906816] [remote 127.0.0.1:61984] RuntimeError: response has not been started
+[Tue Feb 10 18:25:13.143493 2015] [:error] [pid 14250:tid 140440448780032] [remote 127.0.0.1:13789] mod_wsgi (pid=14250): Exception occurred processing WSGI script '/home/zia/Documents/Codes/Django/sql_api/root/wsgi.py'.
+[Tue Feb 10 18:25:13.143565 2015] [:error] [pid 14250:tid 140440448780032] [remote 127.0.0.1:13789] RuntimeError: response has not been started
