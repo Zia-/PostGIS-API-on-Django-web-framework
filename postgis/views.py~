@@ -394,7 +394,7 @@ def campus_itu_maslak_search_without_SessionID_view(request):
                 geom = json.loads(i[3])
                 feature['type'] = 'Feature'
                 feature['geometry'] = geom
-                prop = {'name' : i[0], 'long' : i[1], 'lat' : i[2]}
+                prop = {'name' : i[0], 'long' : str(i[1]), 'lat' : str(i[2])}
                 feature['properties'] = prop
                 features.append(feature)
         data_content['features'] = features
