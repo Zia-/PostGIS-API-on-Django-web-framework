@@ -412,7 +412,49 @@ def campus_itu_maslak_search_without_SessionID_view(request):
         response = {'data' : data_content, 'status' : status_200}
         return HttpResponse( json.dumps( response ) )
 
-	
+# View 10: Custom search text.
+def campus_itu_maslak_shortcut_search_without_SessionID_view(request):
+        long_current = request.GET.get('long_current', '')
+        lat_current = request.GET.get('lat_current', '')
+        shortcut_txt = request.GET.get('shortcut_txt', '')
+        cursor1 = connections['campus_itu_maslak'].cursor()
+        cursor2 = connections['campus_itu_maslak'].cursor()
+        cursor3 = connections['campus_itu_maslak'].cursor()
+        query = "select x, y from buildings where type ilike '%" + shortcut_txt  + "%'"
+        cursor1.execute(query)
+        data_content = {}
+        num = -1
+        for i in cursor1:
+                num += 1
+                individual_content = {}
+                features_route = []
+                features_building = []
+                long_end = i[0]
+                lat_end = i[1]
+                cursor2.execute("SELECT name, cost, st_asgeojson(geom) FROM pgr_aStarFromAtoB('ways', %s, %s, %s, %s) ORDER BY seq", [long_current, lat_current, long_end, lat_end])
+                cursor3.execute("SELECT name, st_asgeojson(the_geom) FROM buildings WHERE x = %s and y = %s", [long_end, lat_end])
+                for i in cursor2:
+                        feature = {}
+                        geom = json.loads(i[2])
+                        feature['type'] = 'Feature'
+                        feature['geometry'] = geom
+                        prop = {'name' : i[0], 'length' : i[1]}
+                        feature['properties'] = prop
+                        features_route.append(feature)
+	for i in cursor3:
+                        feature = {}
+                        geom = json.loads(i[1])
+                        feature['type'] = 'Feature'
+                        feature['geometry'] = geom
+                        prop = {'name' : i[0]}
+                        feature['properties'] = prop
+                        features_building.append(feature)
+                individual_content['features_route'] = features_route
+                individual_content['features_building'] = features_building
+                individual_content['type'] = 'FeatureCollection'
+                data_content[num] = individual_content
+        response = data_content
+        return HttpResponse( json.dumps( response ) )
 
 	
 

@@ -356,50 +356,60 @@ def buffer_view(request, username, tbl_name, clmn_name, rad, width_clmn, seg, fe
 			return HttpResponse(json_result)
 
 # Campus ITU Maslak Views - Below
-# View 8: pgr_aStar
+# View 8: pgr_aStar with building info in geojson
 def campus_itu_maslak_pgr_aStarFromAtoB_without_SessionID_view(request):
         long_st = request.GET.get('long_st', '')
         lat_st = request.GET.get('lat_st', '')
         long_end = request.GET.get('long_end', '')
         lat_end = request.GET.get('lat_end', '')
-        cursor = connections['campus_itu_maslak'].cursor()
-        cursor.execute("SELECT name, cost, st_asgeojson(geom) FROM pgr_aStarFromAtoB('ways', %s, %s, %s, %s) ORDER BY seq", [long_st, lat_st, long_end, lat_end])
+        cursor1 = connections['campus_itu_maslak'].cursor()
+        cursor1.execute("SELECT name, cost, st_asgeojson(geom) FROM pgr_aStarFromAtoB('ways', %s, %s, %s, %s) ORDER BY seq", [long_st, lat_st, long_end, lat_end])
+        cursor2 = connections['campus_itu_maslak'].cursor()
+        cursor2.execute("SELECT name, st_asgeojson(the_geom) from buildings where x = %s and y = %s", [long_end, lat_end])
         data_content = {}
-        features = []
-        for i in cursor:
+        features_route = []
+        features_building = []
+        for i in cursor1:
                 feature = {}
                 geom = json.loads(i[2])
                 feature['type'] = 'Feature'
                 feature['geometry'] = geom
                 prop = {'name' : i[0], 'length' : i[1]}
                 feature['properties'] = prop
-                features.append(feature)
-        data_content['features'] = features
+                features_route.append(feature)
+        for i in cursor2:
+                feature = {}
+                geom = json.loads(i[1])
+                feature['type'] = 'Feature'
+                feature['geometry'] = geom
+                prop = {'name' : i[0]}
+                feature['properties'] = prop
+                features_building.append(feature)
+        data_content['features_route'] = features_route
+        data_content['features_building'] = features_building
         data_content['type'] = 'FeatureCollection'
         response = data_content
         return HttpResponse( json.dumps( response ) )
 
-# View 9: search box with building shape
+
+# View 9: search box in json 
 def campus_itu_maslak_search_without_SessionID_view(request):
         long_current = request.GET.get('long_current', '')
         lat_current = request.GET.get('lat_current', '')
         search_txt = request.GET.get('search_txt', '')
         cursor = connections['campus_itu_maslak'].cursor()
-        query = "select name, x, y, st_asgeojson(the_geom) from buildings where name ilike '%" + search_txt + "%' order by the_geom_ent <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")', 4326) LIMIT 3"
+        query = "select name, x, y from buildings where name ilike '%" + search_txt + "%' order by the_geom_ent <-> ST_GeomFromText('POINT(" + long_current + "  " + lat_current + ")', 4326) LIMIT 3"
         cursor.execute(query)
         data_content = {}
         features = []
         for i in cursor:
                 feature = {}
-                geom = json.loads(i[3])
-                feature['type'] = 'Feature'
-                feature['geometry'] = geom
-                prop = {'name' : i[0], 'long' : str(i[1]), 'lat' : str(i[2])}
-                feature['properties'] = prop
+                feature['name'] = i[0]
+                feature['long'] = str(i[1])
+                feature['lat'] = str(i[2])
                 features.append(feature)
         data_content['features'] = features
-        data_content['type'] = 'FeatureCollection'
-        response = data_content
+        response = {'data' : data_content, 'status' : status_200}
         return HttpResponse( json.dumps( response ) )
 
 	
